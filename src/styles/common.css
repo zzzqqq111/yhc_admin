@@ -1,0 +1,17 @@
+body {
+  font-family: pingfang sc;
+}
+
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+.flex_1 {
+  flex: 1;
+}
+
+.contentWidth{
+  width: 1150px;
+  margin: 0 auto;
+}
