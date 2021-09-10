@@ -4,13 +4,13 @@
       <img src="@/assets/logo.png" />
       <div class="userInfo">
         <i class="el-icon-bell"></i>
-        <el-dropdown size="small">
+        <el-dropdown>
           <span class="el-dropdown-link">
-            用户昵称<i class="el-icon-bell"></i>
+            测试人员<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
-          <el-dropdown-menu slot="dropDown">
-            <el-dropdown-item>用户设置</el-dropdown-item>
-            <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>个人设置</el-dropdown-item>
+            <el-dropdown-item>退出账号</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -38,6 +38,8 @@ export default {
 .head-container {
   width: 100%;
   height: 88px;
+  // box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid #dcdfe6;
 }
 .header-top {
   display: flex;

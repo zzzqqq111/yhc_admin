@@ -4,6 +4,8 @@ import ElementUI from 'element-ui'
 import router from './router';
 import '@/styles/common.css' // global css
 import less from 'less'
+import { messages, request } from '@utils'
+import 'element-ui/lib/theme-chalk/index.css';
 // import NProgress from 'nprogress' // progress bar
 // import getPageTitle from '@utils/get-page-title'
 
@@ -20,6 +22,8 @@ import less from 'less'
 Vue.use(ElementUI)
 Vue.use(less)
 Vue.config.productionTip = false
+Vue.prototype.$message = messages
+Vue.prototype.$request = request
 
 // 不会被复用
 new Vue({

@@ -11,7 +11,28 @@ body {
   flex: 1;
 }
 
-.contentWidth{
+.contentWidth {
   width: 1150px;
   margin: 0 auto;
+}
+
+ul,
+li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.first_title {
+  font-size: 22px;
+  text-align: left;
+  padding: 16px 0;
+  font-weight: bold;
+}
+.line_2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  width: 200px;
 }

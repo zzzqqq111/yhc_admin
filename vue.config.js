@@ -12,14 +12,16 @@ module.exports = {
   },
   devServer: { 
     open: true,
-    // proxy: {
-    //   '/api': {
-    //     target: '',
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       '^/api': 'api'
-    //     }
-    //   }
-    // }
+    // 代理
+    proxy: {   
+      '/api/v1': {
+        target: 'http://pre-main-service.zxhj618.com',
+        changeOrigin: true,
+        secure: false,
+        pathRewrite: {
+          '^/api/v1': '/'
+        }
+      }
+    }
   }  //打开浏览器窗口
 };

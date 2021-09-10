@@ -1,27 +1,38 @@
 <template>
-  <div>
+  <div class="container_box">
     <navbar></navbar>
-    <siderbar></siderbar>
-    <main-body></main-body>
+    <div class="main_body">
+      <siderbar class="el-aside"></siderbar>
+      <div class="content_body"><main-body></main-body></div>
+    </div>
+    
   </div>
 </template>
 <style>
 .container_box {
   height: 100%;
 }
-.el-header,
-.el-footer {
-  background-color: #b3c0d1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
+.main_body{
+  height: calc(100% - 88px);
+  display: flex;
+  margin-top: 3px;
 }
 
 .el-aside {
+  width: 250px;
+  height: 100%;
   background-color: #d3dce6;
   color: #333;
   text-align: center;
   line-height: 200px;
+}
+.content_body{
+  flex: 1;
+  padding: 20px;
+}
+
+.el-menu{
+  height: 100%;
 }
 
 .el-main {
@@ -38,6 +49,7 @@ body > .el-container {
 
 <script>
 import { Navbar, Siderbar, MainBody } from "./components";
+
 export default {
   name: "basicLayout",
   components: {
