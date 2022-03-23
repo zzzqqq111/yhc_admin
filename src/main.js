@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
 import ElementUI from 'element-ui'
-import router from './router';
-import '@/styles/common.css' // global css
+import router from './router'
+import '@/styles/common.css' // 全局 css
 import less from 'less'
 import { messages, request } from '@utils'
-import 'element-ui/lib/theme-chalk/index.css';
+import 'element-ui/lib/theme-chalk/index.css'
+import store from './store'
 // import NProgress from 'nprogress' // progress bar
 // import getPageTitle from '@utils/get-page-title'
 
@@ -29,5 +30,6 @@ Vue.prototype.$request = request
 new Vue({
   el: '#app',
   router,
-  render: h => h(App),
+  store,
+  render: h => h(App)
 })

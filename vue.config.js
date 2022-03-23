@@ -9,6 +9,7 @@ module.exports = {
     config.resolve.alias.set("@utils", resolve("src/utils"));
     config.resolve.alias.set("@components", resolve("src/components"));
     config.resolve.alias.set("@assets", resolve("src/assets"));
+    
   },
   devServer: { 
     open: true,

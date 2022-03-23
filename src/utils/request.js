@@ -1,5 +1,5 @@
 import axios from "axios";
-// import store from "@/store";
+import store from "@/store";
 import { Loading } from "element-ui";
 // import { getToken } from '@/utils/auth'
 
@@ -13,6 +13,13 @@ const service = axios.create({
   timeout: 5000, // 请求超时时间
 });
 
+if (process.env.NODE_ENV == 'development') {    
+  service.defaults.baseURL = '/api/v1';
+} else if (process.env.NODE_ENV == 'debug') {    
+  service.defaults.baseURL = '';
+} else if (process.env.NODE_ENV == 'production') {    
+  service.defaults.baseURL = 'http://api.123dailu.com/';
+}
 /*
  *请求前拦截
  *用于处理需要请求前的操作
@@ -23,11 +30,32 @@ service.interceptors.request.use(
       text: "正在加载中......",
       fullscreen: true,
     });
-    // if (store.state.token) {
-    config.headers["authorization"] =
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJaTF9TUFUiLCJTQUFTIiwiRVhDRVBUSU9OX1BBR0UiLCJaTF9DRU5UUkFMX1dBUkVIT1VTRSIsIlNFVF9VUCIsIkpDX1NQVSIsIkFDQ09VTlQiLCJIT01FX1BBR0UiLCJGSU5BTkNFIiwiQURWRVJUSVNFTUVOVF9CQU5ORVIiLCJKQ19DRU5UUkFMX1dBUkVIT1VTRSIsIkFETUlOX1RPUCIsIkpDX09SREVSIiwiWkxfT1JERVIiXSwidXNlcm5hbWUiOiJhZG1pbiIsImlzcyI6InNpdGUuaGF5b25kLmFjY291bnQiLCJzdWIiOiIxMzQwIiwiYXVkIjoiWlhISiIsImlhdCI6MTYzMDkwODk4MCwiZXhwIjoxNjQ2NDYwOTgwfQ.gbLg7fZ0pLMCSJ0VgER0gWlsCxvTyH5dwxlKygT28s0";
-    // }
-    return config;
+    config.headers = Object.assign(config.method === 'get' ? {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json; charset=UTF-8'
+    } : {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    }, config.headers);
+  
+    if (config.method === 'post') {
+      const contentType = config.headers['Content-Type'];
+      // 根据Content-Type转换data格式
+      if (contentType) {
+        if (contentType.includes('multipart')) { // 类型 'multipart/form-data;'
+          // config.data = data;
+        } else if (contentType.includes('json')) { // 类型 'application/json;'
+          // 服务器收到的raw body(原始数据) "{name:"nowThen",age:"18"}"（普通字符串）
+          config.data = JSON.stringify(config.data);
+        } else { // 类型 'application/x-www-form-urlencoded;'
+          // 服务器收到的raw body(原始数据) name=nowThen&age=18
+          config.data = Qs.stringify(config.data);
+        }
+      }
+    }
+    if (store.state.token) {
+      config.headers["authorization"] = `Bearer ${store.state.token}`;
+    }
+    return Promise.resolve(config);
   },
   (error) => {
     return Promise.reject(error);
@@ -45,9 +73,7 @@ service.interceptors.response.use(
       if (loading) {
         loading.close();
       }
-      
       const res = response.data;
-      console.log('response', res)
       if (res.code === 200) {
         resolve(res.data);
       } else {
@@ -111,7 +137,7 @@ service.interceptors.response.use(
  */
 export function get(url, params) {
   return new Promise((resolve, reject) => {
-    axios
+    service
       .get(url, {
         params,
       })
@@ -128,10 +154,12 @@ export function get(url, params) {
  *@param {String} url [请求的url地址]
  *@param {Object} params [请求时候携带的参数]
  */
-export function post(url, params) {
+export function post(url, params, query) {
   return new Promise((resolve, reject) => {
-    axios
-      .post(url, params)
+    service
+      .post(url, params, {
+        params: query,
+      })
       .then((res) => {
         resolve(res);
       })

@@ -36,3 +36,9 @@ li {
   overflow: hidden;
   width: 200px;
 }
+.search_box{
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  font-size: 14px;
+}

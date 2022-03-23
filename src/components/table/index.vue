@@ -1,17 +1,15 @@
 <template>
-  <el-table :data="tableData" style="width: 100%">
+  <el-table :data="tableData" style="width: 100%" @expand-change="toggleRowExpansion">
     <!-- 展开table -->
     <el-table-column type="expand" v-if="hasExpend">
-      <template >
-        <el-table :data="expendTableData" style="width: 100%">
-          <el-table-column label="规格" prop="SKUID"> </el-table-column>
-          <el-table-column label="价格" prop="SKUID"> </el-table-column>
-          <el-table-column label="单位" prop="SKUID"> </el-table-column>
+      <template slot-scope="scope">
+        <el-table :data="scope.row.skuList" style="width: 100%">
           <el-table-column
             :label="item.label"
             :prop="item.field"
             v-for="item in expendColumnsData"
             :key="item.id"
+            align='center'
           >
           </el-table-column>
         </el-table>
@@ -25,16 +23,19 @@
     >
       <template slot-scope="scope">
         <!-- 开关 -->
-        <el-switch v-if="item.type === 'switch'" v-model="scope.row[item.id]">   
-        </el-switch>
+        <el-switch
+          v-if="item.type === 'switch'"
+          @change="changeStatus(scope.row.id, $event)"
+          :value="Boolean(scope.row[item.id])"
+        ></el-switch>
         <!-- 展示图片 -->
         <img
-          v-if="item.type === 'image'"
+          v-else-if="item.type === 'image'"
           :src="scope.row[item.id]"
           width="80"
           height="60"
         />
-        <div v-else>{{ scope.row[item.id] }}</div>
+        <span v-else>{{ scope.row[item.id] }}</span>
       </template>
     </el-table-column>
     <slot />
@@ -45,21 +46,15 @@ export default {
   props: {
     tableData: {
       type: Array,
-      default() {
-        return [];
-      },
+      value: [],
     },
     columnsData: {
       type: Array,
-      default() {
-        return [];
-      },
+      value: [],
     },
     expendColumnsData: {
       type: Array,
-      default() {
-        return [];
-      },
+      value: [],
     },
     hasExpend: {
       type: Boolean,
@@ -68,6 +63,17 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    changeStatus(id, value) {
+      this.$emit("statusChange", {
+        id,
+        status: value ? 1 : 0,
+      });
+    },
+    toggleRowExpansion(row, expandRows){
+      this.$emit('expandChange', row, expandRows)
+    }
   },
 };
 </script>

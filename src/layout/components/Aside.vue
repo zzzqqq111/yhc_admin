@@ -31,7 +31,6 @@ export default {
   mounted() {
     // 获取所有路由this.$router.options.routes
     this.menus = this.$router.options.routes;
-    console.log(this.menus);
   },
   computed: {
     defaultActive: function(){

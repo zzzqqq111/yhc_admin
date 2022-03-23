@@ -1,7 +1,13 @@
 <template>
   <div class="head-container clearfix">
     <div class="header-top">
-      <img src="@/assets/logo.png" />
+      <a class="logo_box">
+        <img
+          src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg"
+        />
+        Ant Design
+      </a>
+      <span>平台后台</span>
       <div class="userInfo">
         <i class="el-icon-bell"></i>
         <el-dropdown>
@@ -37,7 +43,7 @@ export default {
 <style lang="less" scoped>
 .head-container {
   width: 100%;
-  height: 88px;
+  height: 64px;
   // box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.5);
   border-bottom: 1px solid #dcdfe6;
 }
@@ -47,9 +53,17 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0 50px;
-  img {
-    width: 130px;
+  .logo_box {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 40px;
+      height: 40px;
+      margin-right: 16px;
+    }
   }
+
   .el-dropdown-link {
     margin-left: 20px;
     cursor: pointer;

@@ -42,7 +42,10 @@ export default {
 };
 </script>
 <style>
+.el-pagination{
+  padding: 20px 0;
+}
 .el-pagination.is-background .el-pager li:not(.disabled).active {
-  background-color: turquoise;
+  background-color: #409EFF;
 }
 </style>
